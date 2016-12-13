@@ -4,47 +4,93 @@ import expect, { createSpy, spyOn, isSpy } from 'expect';
 import deepFreeze from 'deep-freeze';
 import { createStore } from 'redux';
 
-const counter = (state = 0, action) => {
+const todos = (state = [], action) => {
   switch (action.type) {
-    case 'INCREMENT':
-      return state + 1;
-    case 'DECREMENT':
-      return state - 1;
+    case 'ADD_TODO':
+      return [
+        ...state,
+        {
+          id: action.id,
+          text: action.text,
+          completed: false,
+        },
+      ];
+    case 'TOGGLE_TODO':
+      return state.map((todo) => {
+        if (todo.id !== action.id) {
+          return todo;
+        }
+        return {
+          ...todo,
+          completed: !todo.completed,
+        };
+      });
     default:
       return state;
   }
 };
 
-const store = createStore(counter);
+const testAddTodos = () => {
+  const stateBefore = [];
+  const action = {
+    type: 'ADD_TODO',
+    id: 0,
+    text: 'Learn redux',
+  };
+  const stateAfter = [
+    {
+      id: 0,
+      text: 'Learn redux',
+      completed: false,
+    },
+  ];
 
-const Counter = ({
-  value,
-  onIncrement,
-  onDecrement,
-}) => (
-  <div>
-    <h1>{value}</h1>
-    <button onClick={onIncrement}>+</button>
-    <button onClick={onDecrement}>-</button>
-  </div>
-);
+  deepFreeze(stateBefore);
+  deepFreeze(action);
 
-const render = () => {
-  ReactDom.render(
-    <Counter
-      value={store.getState()}
-      onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
-      onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
-    />,
-    document.getElementById('root'),
-  );
+  expect(
+    todos(stateBefore, action),
+  ).toEqual(stateAfter);
 };
 
-store.subscribe(render);
-render();
+const testToggleTodo = () => {
+  const stateBefore = [
+    {
+      id: 0,
+      text: 'Learn redux',
+      completed: false,
+    },
+    {
+      id: 1,
+      text: 'Go shopping',
+      completed: false,
+    },
+  ];
+  const action = {
+    type: 'TOGGLE_TODO',
+    id: 1,
+  };
+  const stateAfter = [
+    {
+      id: 0,
+      text: 'Learn redux',
+      completed: false,
+    },
+    {
+      id: 1,
+      text: 'Go shopping',
+      completed: true,
+    },
+  ];
 
-Counter.propTypes = {
-  value: PropTypes.number.isRequired,
-  onIncrement: PropTypes.func.isRequired,
-  onDecrement: PropTypes.func.isRequired,
+  deepFreeze(stateBefore);
+  deepFreeze(action);
+
+  expect(
+    todos(stateBefore, action),
+  ).toEqual(stateAfter);
 };
+
+testAddTodos();
+testToggleTodo();
+console.error('All tests passed');
