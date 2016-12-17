@@ -55,58 +55,176 @@ const todoApp = combineReducers({
 
 const store = createStore(todoApp);
 
-let nextTodoId = 0;
-class TodoApp extends Component {
-  render() {
-    return (
-      <div>
-        <input ref={node => {
-          this.input = node
-        }}
-        />
-        <button
-          onClick={() => {
-            store.dispatch({
-              type: 'ADD_TODO',
-              text: this.input.value,
-              id: nextTodoId += 1,
-            });
-            this.input.value = '';
-          }}
-        >
-          Add todo
-        </button>
-        <ul>
-          {
-            this.props.todos.map(t =>
-              <li
-                key={t.id}
-                onClick={() => {
-                  store.dispatch({
-                    type: 'TOGGLE_TODO',
-                    id: t.id,
-                  });
-                }}
-                style={{
-                  textDecoration: t.completed ?
-                    'line-through' :
-                    'none'
-                }}
-              >
-                {t.text}
-              </li>,
-            )
-          }
-        </ul>
-      </div>
-    );
+const FilterLink = ({
+  filter,
+  currentFilter,
+  children,
+  onClick
+}) => {
+  if (filter === currentFilter) {
+    return <span>{children}</span>;
   }
-}
+  return (
+    <a href="#"
+      onClick={e => {
+        e.preventDefault();
+        onClick(filter);
+      }}
+    >
+      {children}
+    </a>
+  );
+};
+
+const getVisibilityTodo = (
+  todos,
+  filter
+) => {
+  switch (filter) {
+    case 'SHOW_ALL':
+      return todos;
+    case 'SHOW_ACTIVE':
+      return todos.filter(t => !t.completed);
+    case 'SHOW_COMPLETED':
+      return todos.filter(t => t.completed);
+    default:
+      return todos
+  }
+};
+
+const AddTodo = ({
+  onAddClick
+}) => {
+  let input;
+  return(
+    <div>
+      <input ref={node => {
+        input = node
+      }}
+      />
+      <button
+        onClick={() => {
+          onAddClick(input.value);
+          input.value = '';
+        }}
+      >
+        Add todo
+      </button>
+    </div>
+  );
+};
+
+const Todo = ({
+  onClick,
+  completed,
+  text
+}) => (
+  <li
+    onClick={onClick}
+    style={{
+      textDecoration:
+        completed ?
+        'line-through' :
+        'none'
+    }}
+  >
+    {text}
+  </li>
+);
+
+const TodoList = ({
+  todos,
+  onTodoClick
+}) => (
+  <ul>
+    {
+      todos.map(todo =>
+        <Todo key={todo.id}
+              {...todo}
+              onClick={() => onTodoClick(todo.id)}
+        />
+      )
+    }
+  </ul>
+);
+
+const Footer = ({
+  visibilityFilter,
+  onFilterClick
+}) => (
+  <p>
+    Show:
+    {' '}
+    <FilterLink
+      filter='SHOW_ALL'
+      currentFilter={visibilityFilter}
+      onClick={onFilterClick}
+    >
+      All
+    </FilterLink>
+    {' '}
+    <FilterLink
+      filter='SHOW_ACTIVE'
+      currentFilter={visibilityFilter}
+      onClick={onFilterClick}
+    >
+      Active
+    </FilterLink>
+    {' '}
+    <FilterLink
+      filter='SHOW_COMPLETED'
+      currentFilter={visibilityFilter}
+      onClick={onFilterClick}
+    >
+      Completed
+    </FilterLink>
+  </p>
+);
+
+let nextTodoId = 0;
+const TodoApp = ({
+  todos,
+  visibilityFilter
+}) => (
+  <div>
+    <AddTodo onAddClick={text => {
+      store.dispatch({
+        type: 'ADD_TODO',
+        id: nextTodoId++,
+        text
+      });
+    }}
+    />
+    <TodoList
+      todos={
+        getVisibilityTodo(
+          todos,
+          visibilityFilter
+        )
+      }
+      onTodoClick={id => {
+        store.dispatch({
+          type: 'TOGGLE_TODO',
+          id
+        });
+      }}
+    />
+    <Footer
+      visibilityFilter={visibilityFilter}
+      onFilterClick={filter => {
+        store.dispatch({
+          type: 'SET_VISIBILITY_FILTER',
+          filter,
+        });
+      }}
+    />
+  </div>
+);
 
 const render = () => {
   ReactDom.render(
     <TodoApp
-      todos={store.getState().todos}
+      {...store.getState()}
     />,
     document.getElementById('root'),
   );
