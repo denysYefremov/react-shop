@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 import expect, { createSpy, spyOn, isSpy } from 'expect';
 import deepFreeze from 'deep-freeze';
 import { createStore, combineReducers } from 'redux';
+import { Provider, connect } from 'react-redux';
 
 const todo = (state, action) => {
   switch (action.type) {
@@ -53,28 +54,66 @@ const todoApp = combineReducers({
   visibilityFilter,
 });
 
-const store = createStore(todoApp);
+let nextTodoId = 0;
+const addTodo = (text) => {
+  return {
+    type: 'ADD_TODO',
+    id: nextTodoId++,
+    text,
+  };
+};
 
-const FilterLink = ({
-  filter,
-  currentFilter,
+const toggleTodo = (id) => {
+  return {
+    type: 'TOGGLE_TODO',
+    id
+  }
+};
+
+const setVisibilityFilter = (filter) => {
+  return {
+    type: 'SET_VISIBILITY_FILTER',
+    filter,
+  }
+};
+
+const Link = ({
+  active,
   children,
   onClick
 }) => {
-  if (filter === currentFilter) {
+  if (active) {
     return <span>{children}</span>;
   }
   return (
     <a href="#"
       onClick={e => {
         e.preventDefault();
-        onClick(filter);
+        onClick();
       }}
     >
       {children}
     </a>
   );
 };
+
+const mapStateToLinkProps = (state, ownProps) => {
+  return {
+    active: ownProps.filter === state.visibilityFilter
+  };
+};
+
+const mapDispatchToLinkProps = (dispatch, ownProps) => {
+  return {
+    onClick: () => {
+      dispatch(setVisibilityFilter(ownProps.filter))
+    }
+  };
+};
+const FilterLink = connect(
+  mapStateToLinkProps,
+  mapDispatchToLinkProps
+)(Link);
 
 const getVisibilityTodo = (
   todos,
@@ -92,9 +131,7 @@ const getVisibilityTodo = (
   }
 };
 
-const AddTodo = ({
-  onAddClick
-}) => {
+let AddTodo = ({ dispatch }) => {
   let input;
   return(
     <div>
@@ -104,7 +141,7 @@ const AddTodo = ({
       />
       <button
         onClick={() => {
-          onAddClick(input.value);
+          dispatch(addTodo(input.value));
           input.value = '';
         }}
       >
@@ -113,6 +150,7 @@ const AddTodo = ({
     </div>
   );
 };
+AddTodo = connect()(AddTodo);
 
 const Todo = ({
   onClick,
@@ -148,152 +186,61 @@ const TodoList = ({
   </ul>
 );
 
-const Footer = ({
-  visibilityFilter,
-  onFilterClick
-}) => (
+const mapStateToTodoListProps = (state) => {
+  return {
+    todos: getVisibilityTodo(
+      state.todos,
+      state.visibilityFilter
+    )
+  };
+};
+const mapDispatchTodoListToProps = (dispatch) => {
+  return {
+    onTodoClick: (id) => {
+      dispatch(toggleTodo(id));
+    }
+  };
+};
+const VisibleTodoList = connect(
+  mapStateToTodoListProps,
+  mapDispatchTodoListToProps
+)(TodoList);
+
+const Footer = () => (
   <p>
     Show:
     {' '}
     <FilterLink
       filter='SHOW_ALL'
-      currentFilter={visibilityFilter}
-      onClick={onFilterClick}
     >
       All
     </FilterLink>
     {' '}
     <FilterLink
       filter='SHOW_ACTIVE'
-      currentFilter={visibilityFilter}
-      onClick={onFilterClick}
     >
       Active
     </FilterLink>
     {' '}
     <FilterLink
       filter='SHOW_COMPLETED'
-      currentFilter={visibilityFilter}
-      onClick={onFilterClick}
     >
       Completed
     </FilterLink>
   </p>
 );
 
-let nextTodoId = 0;
-const TodoApp = ({
-  todos,
-  visibilityFilter
-}) => (
+const TodoApp = () => (
   <div>
-    <AddTodo onAddClick={text => {
-      store.dispatch({
-        type: 'ADD_TODO',
-        id: nextTodoId++,
-        text
-      });
-    }}
-    />
-    <TodoList
-      todos={
-        getVisibilityTodo(
-          todos,
-          visibilityFilter
-        )
-      }
-      onTodoClick={id => {
-        store.dispatch({
-          type: 'TOGGLE_TODO',
-          id
-        });
-      }}
-    />
-    <Footer
-      visibilityFilter={visibilityFilter}
-      onFilterClick={filter => {
-        store.dispatch({
-          type: 'SET_VISIBILITY_FILTER',
-          filter,
-        });
-      }}
-    />
+    <AddTodo />
+    <VisibleTodoList />
+    <Footer />
   </div>
 );
 
-const render = () => {
-  ReactDom.render(
-    <TodoApp
-      {...store.getState()}
-    />,
-    document.getElementById('root'),
-  );
-};
-
-store.subscribe(render);
-render();
-
-const testAddTodos = () => {
-  const stateBefore = [];
-  const action = {
-    type: 'ADD_TODO',
-    id: 0,
-    text: 'Learn redux',
-  };
-  const stateAfter = [
-    {
-      id: 0,
-      text: 'Learn redux',
-      completed: false,
-    },
-  ];
-
-  deepFreeze(stateBefore);
-  deepFreeze(action);
-
-  expect(
-    todos(stateBefore, action),
-  ).toEqual(stateAfter);
-};
-
-const testToggleTodo = () => {
-  const stateBefore = [
-    {
-      id: 0,
-      text: 'Learn redux',
-      completed: false,
-    },
-    {
-      id: 1,
-      text: 'Go shopping',
-      completed: false,
-    },
-  ];
-  const action = {
-    type: 'TOGGLE_TODO',
-    id: 1,
-  };
-  const stateAfter = [
-    {
-      id: 0,
-      text: 'Learn redux',
-      completed: false,
-    },
-    {
-      id: 1,
-      text: 'Go shopping',
-      completed: true,
-    },
-  ];
-
-  deepFreeze(stateBefore);
-  deepFreeze(action);
-
-  expect(
-    todos(stateBefore, action),
-  ).toEqual(stateAfter);
-};
-
-testAddTodos();
-testToggleTodo();
-console.error('All tests passed');
+ReactDom.render(
+  <Provider store={createStore(todoApp)}>
+    <TodoApp />
+  </Provider>,
+  document.getElementById('root'),
+);
