@@ -239,7 +239,7 @@ const TodoApp = () => (
 );
 
 ReactDom.render(
-  <Provider store={createStore(todoApp)}>
+  <Provider store={createStore(todoApp, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
     <TodoApp />
   </Provider>,
   document.getElementById('root'),
