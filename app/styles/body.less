@@ -1,0 +1,22 @@
+.body {
+  .text-center;
+  padding: 50px 0;
+  height: ~"calc(100% - @{header-height} - @{footer-height})";
+  overflow: auto;
+  position: absolute;
+  width: 100%;
+
+  .items-list {
+    .text-left;
+    width: @default-screen-size;
+    margin: 0 auto;
+
+    .item {
+      .va-middle;
+      width: 180px;
+      height: 250px;
+      border: 1px solid @darker-bone-white;
+      margin: 8px;
+    }
+  }
+}

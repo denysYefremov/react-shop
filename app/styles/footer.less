@@ -1,0 +1,43 @@
+@default-padding: 35px;
+
+.footer {
+  .text-center;
+  width: 100%;
+  border-top: 1px solid @darker-bone-white;
+  padding: 10px 25px;
+  height: @footer-height;
+  max-height: @footer-height;
+  position: absolute;
+  bottom: 0;
+
+  .left, .logo, .right {
+    .va-middle;
+
+    a, span {
+      padding-right: @default-padding;
+    }
+  }
+
+  .logo {
+    padding-right: @default-padding;
+  }
+
+  .left, .right {
+    span {
+      font-size: @font-size-h6;
+      line-height: @line-height-h6;
+      font-weight: bold;
+    }
+
+    a {
+      color: @blue;
+      text-decoration: none;
+      font-size: @font-size-h6;
+      line-height: @line-height-h6;
+    }
+  }
+
+  .right a:last-child {
+    padding-right: 0;
+  }
+}

@@ -1,0 +1,56 @@
+@logo-width: 75px;
+@basket-icon: 28px;
+
+.header {
+  padding: 10px 50px;
+  border-bottom: 1px solid @darker-bone-white;
+  background: @bone-white;
+  height: @header-height;
+  max-height: @header-height;
+
+  .logo {
+    .va-middle;
+    position: relative;
+    height: 95px;
+
+    .shop-title {
+      position: absolute;
+      width: 75px;
+      bottom: 0;
+      left: 50%;
+      transform:translateX(-50%);
+    }
+  }
+
+  .title {
+    .va-middle;
+    .text-center;
+    width: ~"calc(100% - @{logo-width})";
+    transform:translateX(calc(@logo-width/2));
+  }
+
+  .basket {
+    .va-middle;
+    position: relative;
+    max-width: @basket-icon;
+    text-decoration: none;
+
+    i {
+      font-size: @font-size-h1;
+      line-height: @line-height-h1;
+    }
+
+    .counter {
+      display: inline-block;
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      padding: 1px 3px;
+      background: @sea;
+      border-radius: 50%;
+      font-size: @font-size-h3;
+      line-height: @line-height-h3;
+      color: @white;
+    }
+  }
+}
