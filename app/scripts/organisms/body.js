@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
+import ItemsList from '../items/itemsList';
 
 const Body = ({ products }) => (
   <div className="body">
+    <ItemsList products={products} />
   </div>
 );
 

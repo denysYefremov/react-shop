@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import ReactDom from 'react-dom';
 import styles from './styles/index.less';
 /* import { createStore } from 'redux';
