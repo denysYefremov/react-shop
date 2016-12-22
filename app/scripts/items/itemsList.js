@@ -14,11 +14,19 @@ const ItemList = ({ products }) => (
   </ul>
 );
 
-const { arrayOf, shape } = PropTypes;
+const { arrayOf, shape, number, string } = PropTypes;
 
 ItemList.propTypes = {
   products: arrayOf(
-    shape,
+    shape(
+      {
+        id: number,
+        name: string,
+        description: string,
+        count: number,
+        img: string,
+      },
+    ),
   ).isRequired,
 };
 

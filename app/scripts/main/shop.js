@@ -11,11 +11,19 @@ const Shop = ({ products }) => (
   </div>
 );
 
-const { arrayOf, shape } = PropTypes;
+const { arrayOf, shape, number, string } = PropTypes;
 
 Shop.propTypes = {
   products: arrayOf(
-    shape,
+    shape(
+      {
+        id: number,
+        name: string,
+        description: string,
+        count: number,
+        img: string,
+      },
+    ),
   ).isRequired,
 };
 
