@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Counter from '../atoms/counter';
+import productShape from '../shapes/productShape';
 
 const Item = ({ item }) => (
   <li className="item">
@@ -14,17 +15,11 @@ const Item = ({ item }) => (
   </li>
 );
 
-const { shape, number, string } = PropTypes;
+const { shape } = PropTypes;
 
 Item.propTypes = {
   item: shape(
-    {
-      id: number,
-      name: string,
-      description: string,
-      count: number,
-      img: string,
-    },
+    productShape,
   ).isRequired,
 };
 

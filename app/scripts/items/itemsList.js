@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Item from './item';
+import productShape from '../shapes/productShape';
 
 const ItemList = ({ products }) => (
   <ul className="items-list">
@@ -14,18 +15,12 @@ const ItemList = ({ products }) => (
   </ul>
 );
 
-const { arrayOf, shape, number, string } = PropTypes;
+const { arrayOf, shape } = PropTypes;
 
 ItemList.propTypes = {
   products: arrayOf(
     shape(
-      {
-        id: number,
-        name: string,
-        description: string,
-        count: number,
-        img: string,
-      },
+      productShape,
     ),
   ).isRequired,
 };

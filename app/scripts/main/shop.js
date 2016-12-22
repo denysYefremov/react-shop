@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import Header from '../organisms/header';
 import Body from '../organisms/body';
 import Footer from '../organisms/footer';
+import productShape from '../shapes/productShape';
 
 const Shop = ({ products }) => (
   <div className="main">
@@ -11,18 +12,12 @@ const Shop = ({ products }) => (
   </div>
 );
 
-const { arrayOf, shape, number, string } = PropTypes;
+const { arrayOf, shape } = PropTypes;
 
 Shop.propTypes = {
   products: arrayOf(
     shape(
-      {
-        id: number,
-        name: string,
-        description: string,
-        count: number,
-        img: string,
-      },
+      productShape,
     ),
   ).isRequired,
 };
