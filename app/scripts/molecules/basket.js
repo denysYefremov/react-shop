@@ -4,7 +4,7 @@ import Counter from '../atoms/counter';
 const Basket = () => (
   <a href="basket" className="basket">
     <i className="icon icon-cart" />
-    <Counter />
+    <Counter number={0} />
   </a>
 );
 

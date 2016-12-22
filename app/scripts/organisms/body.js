@@ -1,30 +1,16 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 
-const Body = () => (
+const Body = ({ products }) => (
   <div className="body">
-    <ul className="items-list">
-      <li className="item">1</li>
-      <li className="item">2</li>
-      <li className="item">3</li>
-      <li className="item">4</li>
-      <li className="item">5</li>
-      <li className="item">1</li>
-      <li className="item">2</li>
-      <li className="item">3</li>
-      <li className="item">4</li>
-      <li className="item">5</li>
-      <li className="item">1</li>
-      <li className="item">2</li>
-      <li className="item">3</li>
-      <li className="item">4</li>
-      <li className="item">5</li>
-      <li className="item">1</li>
-      <li className="item">2</li>
-      <li className="item">3</li>
-      <li className="item">4</li>
-      <li className="item">5</li>
-    </ul>
   </div>
 );
+
+const { arrayOf, shape } = PropTypes;
+
+Body.propTypes = {
+  products: arrayOf(
+    shape,
+  ).isRequired,
+};
 
 export default Body;
