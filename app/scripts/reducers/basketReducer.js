@@ -1,24 +1,19 @@
-import { combineReducers } from 'redux';
-import { connect } from 'react-redux';
+import products from '../../initData';
 
 let basketCounter = 0;
 
-const addProduct = (state, obj) => {
-  if (state.filter(product => product.id === obj.id).length === 0) state.push(obj);
+const addProduct = (state, obj) => state.map((product) => {
+  let newObj = {};
+  if (product.id === obj.id && obj.count > 0) {
+    newObj = { ...obj };
+    newObj.maxCount = newObj.maxCount || newObj.count;
+    newObj.count -= 1;
+    basketCounter += 1;
+    return newObj;
+  }
 
-  return state.map((product) => {
-    let newObj = {};
-    if (product.id === obj.id && obj.count > 0) {
-      newObj = { ...obj };
-      newObj.maxCount = newObj.maxCount || newObj.count;
-      newObj.count -= 1;
-      basketCounter += 1;
-      return newObj;
-    }
-
-    return obj;
-  });
-};
+  return product;
+});
 
 const removeProduct = (state, obj) => state.map((product) => {
   let newObj = {};
@@ -32,10 +27,10 @@ const removeProduct = (state, obj) => state.map((product) => {
     return newObj;
   }
 
-  return obj;
+  return product;
 });
 
-const basket = (state = [], action) => {
+const basket = (state = products.payload, action) => {
   switch (action.type) {
     case 'ADD_PRODUCT':
       return addProduct(state, action.product);

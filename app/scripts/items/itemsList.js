@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
-import Item from '../containers/itemContainer';
+import Item from './item';
 import productShape from '../shapes/productShape';
 import WithReadyState from '../containers/withReadyState';
 
-const ItemList = ({ products }) => (
+const ItemList = ({ products, onProductClick }) => (
   <ul className="items-list">
     {
       products.map(product =>
@@ -11,6 +11,7 @@ const ItemList = ({ products }) => (
           <Item
             key={product.id}
             item={product}
+            onClick={() => onProductClick(product)}
           />
         </WithReadyState>,
       )
@@ -18,7 +19,7 @@ const ItemList = ({ products }) => (
   </ul>
 );
 
-const { arrayOf, shape } = PropTypes;
+const { arrayOf, shape, func } = PropTypes;
 
 ItemList.propTypes = {
   products: arrayOf(
@@ -26,6 +27,7 @@ ItemList.propTypes = {
       productShape,
     ),
   ).isRequired,
+  onProductClick: func.isRequired,
 };
 
 export default ItemList;

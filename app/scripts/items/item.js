@@ -27,7 +27,7 @@ Item.propTypes = {
   item: shape(
     productShape,
   ).isRequired,
-  onClick: func,
+  onClick: func.isRequired,
 };
 
 export default Item;

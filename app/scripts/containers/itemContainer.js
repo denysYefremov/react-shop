@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
-import Item from '../items/item';
+import itemsList from '../items/itemsList';
 import { addProduct } from '../actions/productActions';
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  products: state,
+});
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => {
-    dispatch(addProduct(ownProps.item));
+const mapDispatchToProps = dispatch => ({
+  onProductClick: (item) => {
+    dispatch(addProduct(item));
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Item);
+export default connect(mapStateToProps, mapDispatchToProps)(itemsList);

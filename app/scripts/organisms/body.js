@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import ItemsList from '../items/itemsList';
+import ItemsList from '../containers/itemContainer';
 import productShape from '../shapes/productShape';
 
 const Body = ({ products }) => (
