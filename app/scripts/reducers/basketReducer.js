@@ -1,14 +1,12 @@
 import products from '../../initData';
 
-let basketCounter = 0;
-
 const addProduct = (state, obj) => state.map((product) => {
   let newObj = {};
   if (product.id === obj.id && obj.count > 0) {
     newObj = { ...obj };
     newObj.maxCount = newObj.maxCount || newObj.count;
     newObj.count -= 1;
-    basketCounter += 1;
+    newObj.addedCount = newObj.addedCount + 1 || 1;
     return newObj;
   }
 
@@ -17,13 +15,13 @@ const addProduct = (state, obj) => state.map((product) => {
 
 const removeProduct = (state, obj) => state.map((product) => {
   let newObj = {};
-  if (product.id === obj.id && obj.count < obj.maxCount) {
+  if (product.id === obj.id && obj.addedCount > 0) {
     newObj = { ...obj };
     newObj.count += 1;
+    newObj.addedCount -= 1;
 
     if (newObj.count === newObj.maxCount) delete newObj.maxCount;
 
-    basketCounter -= 1;
     return newObj;
   }
 
