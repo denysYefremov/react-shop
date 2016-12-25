@@ -8,9 +8,9 @@ const Logo = ({ children }) => (
   </a>
 );
 
-const { element } = PropTypes;
+const { string } = PropTypes;
 Logo.propTypes = {
-  children: element,
+  children: string,
 };
 
 export default Logo;

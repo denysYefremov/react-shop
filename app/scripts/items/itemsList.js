@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Item from './item';
+import Item from '../containers/itemContainer';
 import productShape from '../shapes/productShape';
 import WithReadyState from '../containers/withReadyState';
 
@@ -7,7 +7,7 @@ const ItemList = ({ products }) => (
   <ul className="items-list">
     {
       products.map(product =>
-        <WithReadyState isReady={product.count > 0}>
+        <WithReadyState key={product.id} isReady={product.count > 0}>
           <Item
             key={product.id}
             item={product}
