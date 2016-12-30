@@ -3,8 +3,8 @@ import Counter from '../atoms/counter';
 
 const foundCount = (state) => {
   let sumCount = 0;
-  state.forEach((p) => {
-    if (p.addedCount) sumCount += p.addedCount;
+  state.basket.forEach((p) => {
+    if (p.count) { sumCount += p.count; }
   });
 
   return sumCount;

@@ -1,5 +1,13 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import basketReducer from '../reducers/basketReducer';
+import itemsReducer from '../reducers/itemsReducer';
+
+const reducers = combineReducers(
+  {
+    basket: basketReducer,
+    items: itemsReducer,
+  },
+);
 
 const getAvailableDevTools = () => {
   if (process.env.NODE_ENV === 'development' && window.devToolsExtension) {
@@ -10,7 +18,7 @@ const getAvailableDevTools = () => {
 };
 
 const mainStore = createStore(
-  basketReducer,
+  reducers,
   getAvailableDevTools(),
 );
 

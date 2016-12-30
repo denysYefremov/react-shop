@@ -1,34 +1,45 @@
-import products from '../../initData';
+const addProduct = (state, obj) => {
+  let index = 0;
+  const product = state.find((p, i) => {
+    if (p.id === obj.id) {
+      index = i;
+      return true;
+    }
+    return false;
+  });
 
-const addProduct = (state, obj) => state.map((product) => {
-  let newObj = {};
-  if (product.id === obj.id && obj.count > 0) {
-    newObj = { ...obj };
-    newObj.maxCount = newObj.maxCount || newObj.count;
-    newObj.count -= 1;
-    newObj.addedCount = newObj.addedCount + 1 || 1;
-    return newObj;
+  if (product) {
+    return state.map((p, i) => {
+      if (i === index) {
+        return {
+          ...p,
+          count: p.count + 1,
+        };
+      }
+      return p;
+    });
   }
 
-  return product;
-});
+  return [
+    ...state,
+    {
+      ...obj,
+      count: 1,
+    },
+  ];
+};
 
 const removeProduct = (state, obj) => state.map((product) => {
-  let newObj = {};
-  if (product.id === obj.id && obj.addedCount > 0) {
-    newObj = { ...obj };
-    newObj.count += 1;
-    newObj.addedCount -= 1;
-
-    if (newObj.count === newObj.maxCount) delete newObj.maxCount;
-
-    return newObj;
+  if (product.id !== obj.id || product.count === 0) {
+    return product;
   }
-
-  return product;
+  return {
+    ...product,
+    count: product.count - 1,
+  };
 });
 
-const basket = (state = products.payload, action) => {
+const basketReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_PRODUCT':
       return addProduct(state, action.product);
@@ -39,5 +50,4 @@ const basket = (state = products.payload, action) => {
   }
 };
 
-export default basket;
-
+export default basketReducer;

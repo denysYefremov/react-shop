@@ -3,7 +3,7 @@ import itemsList from '../items/itemsList';
 import { addProduct } from '../actions/productActions';
 
 const mapStateToProps = state => ({
-  products: state,
+  products: state.items,
 });
 
 const mapDispatchToProps = dispatch => ({
