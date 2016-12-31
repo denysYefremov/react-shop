@@ -4,7 +4,7 @@ export default {
       id: 0,
       name: 'Ribbok shoes',
       description: 'The best shoes ever!',
-      count: 0,
+      count: 2,
       img: '',
     },
     {

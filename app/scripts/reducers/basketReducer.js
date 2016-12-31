@@ -1,6 +1,9 @@
+import Immutable from 'immutable';
+
 const addProduct = (state, obj) => {
+  let immutState = Immutable.List.of(...state);
   let index = 0;
-  const product = state.find((p, i) => {
+  const product = immutState.find((p, i) => {
     if (p.id === obj.id) {
       index = i;
       return true;
@@ -9,35 +12,28 @@ const addProduct = (state, obj) => {
   });
 
   if (product) {
-    return state.map((p, i) => {
-      if (i === index) {
-        return {
-          ...p,
-          count: p.count + 1,
-        };
-      }
-      return p;
-    });
+    immutState.get(index).count += 1;
+  } else {
+    immutState = immutState.push({ ...obj, count: 1 });
   }
 
-  return [
-    ...state,
-    {
-      ...obj,
-      count: 1,
-    },
-  ];
+  return immutState.toArray();
 };
 
-const removeProduct = (state, obj) => state.map((product) => {
-  if (product.id !== obj.id || product.count === 0) {
-    return product;
-  }
-  return {
-    ...product,
-    count: product.count - 1,
-  };
-});
+const removeProduct = (state, obj) => {
+  let immutState = Immutable.List.of(...state);
+  immutState = immutState.map((p) => {
+    if (p.id === obj.id) {
+      return {
+        ...p,
+        count: p.count - 1,
+      };
+    }
+    return p;
+  });
+
+  return immutState.filter(iState => iState.count !== 0).toArray();
+};
 
 const basketReducer = (state = [], action) => {
   switch (action.type) {

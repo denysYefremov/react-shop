@@ -1,24 +1,40 @@
+import Immutable from 'immutable';
 import products from '../../initData';
 
-const addProduct = (state, obj) => state.map((product) => {
-  if (product.id !== obj.id || product.count === 0) {
-    return product;
-  }
-  return {
-    ...product,
-    count: product.count - 1,
-  };
-});
+const addProduct = (state, obj) => {
+  let immutState = Immutable.List.of(...state);
+  immutState = immutState.map((p) => {
+    if (p.id === obj.id) {
+      return {
+        ...p,
+        count: p.count - 1,
+      };
+    }
+    return p;
+  });
 
-const removeProduct = (state, obj) => state.map((product) => {
-  if (product.id !== obj.id) {
-    return product;
+  return immutState.filter(iState => iState.count !== 0).toArray();
+};
+
+const removeProduct = (state, obj) => {
+  let immutState = Immutable.List.of(...state);
+  let index = 0;
+  const product = immutState.map((p, i) => {
+    if (p.id === obj.id) {
+      index = i;
+      return true;
+    }
+    return false;
+  });
+
+  if (product) {
+    immutState.get(index).count += 1;
+  } else {
+    immutState = immutState.push({ ...obj, count: 1 });
   }
-  return {
-    ...product,
-    count: product.count + 1,
-  };
-});
+
+  return immutState.toArray();
+};
 
 const itemsReducer = (state = products.payload, action) => {
   switch (action.type) {
