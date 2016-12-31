@@ -33,24 +33,104 @@
     .va-middle;
     position: relative;
     max-width: @basket-icon;
-    text-decoration: none;
+
+    a {
+      display: inline-block;
+      text-decoration: none;
+
+      & > .counter {
+        display: inline-block;
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        padding: 1px 3px;
+        background: @sea;
+        border-radius: 50%;
+        font-size: @font-size-h3;
+        line-height: @line-height-h3;
+        color: @white;
+      }
+    }
 
     i {
       font-size: @font-size-h1;
       line-height: @line-height-h1;
     }
+  }
 
-    .counter {
-      display: inline-block;
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      padding: 1px 3px;
-      background: @sea;
-      border-radius: 50%;
-      font-size: @font-size-h3;
-      line-height: @line-height-h3;
-      color: @white;
+  .popover {
+    .h-custom(75%);
+    width: 275px;
+    max-height: 336px;
+    position: absolute;
+    top: 100%;
+    background-color: @white;
+    border: 1px solid @darker-bone-white;
+    z-index: 1;
+    overflow-y: auto;
+
+    .items-list {
+      list-style: none;
+
+      .item {
+        padding: 5px 10px;
+        border-bottom: 1px solid @darker-bone-white;
+        height: 42px;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .item-image {
+          .va-middle;
+          .item-image-mixin;
+          width: 30px;
+          height: 30px;
+          margin-right: 5px;
+        }
+
+        .info {
+          .va-middle;
+          width: 200px;
+
+          & > * {
+            .va-middle;
+            padding-right: 5px;
+
+            &:last-child {
+              padding-right: 0;
+            }
+          }
+
+          h3 {
+            .truncate;
+            max-width: 150px;
+          }
+
+          .counter {
+            font-size: @font-size-h5;
+            line-height: @line-height-h5;
+
+            &:before {
+              content: 'x';
+              font-size: @font-size-h5;
+              line-height: @line-height-h5;
+              padding-right: 5px;
+            }
+          }
+
+          .item-action {
+            border-left: 1px solid @darker-bone-white;
+            padding-left: 10px;
+            float: right;
+
+            i {
+              font-size: @font-size-h5;
+              line-height: @line-height-h5;
+            }
+          }
+        }
+      }
     }
   }
 }

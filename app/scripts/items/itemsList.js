@@ -3,7 +3,7 @@ import Item from './item';
 import productShape from '../shapes/productShape';
 import WithReadyState from '../containers/withReadyState';
 
-const ItemList = ({ products, onProductClick }) => (
+const ItemsList = ({ products, canAddItems, onProductClick }) => (
   <ul className="items-list">
     {
       products.map(product =>
@@ -11,6 +11,7 @@ const ItemList = ({ products, onProductClick }) => (
           <Item
             key={product.id}
             item={product}
+            canAddItems={canAddItems}
             onClick={() => onProductClick(product)}
           />
         </WithReadyState>,
@@ -19,15 +20,16 @@ const ItemList = ({ products, onProductClick }) => (
   </ul>
 );
 
-const { arrayOf, shape, func } = PropTypes;
+const { arrayOf, shape, func, bool } = PropTypes;
 
-ItemList.propTypes = {
+ItemsList.propTypes = {
   products: arrayOf(
     shape(
       productShape,
     ),
   ).isRequired,
+  canAddItems: bool,
   onProductClick: func.isRequired,
 };
 
-export default ItemList;
+export default ItemsList;

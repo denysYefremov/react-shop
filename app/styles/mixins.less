@@ -34,3 +34,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.h-center() {
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.h-custom(@shift) {
+  left: 50%;
+  transform: translate(-@shift, 0);
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

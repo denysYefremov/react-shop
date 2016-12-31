@@ -1,21 +1,10 @@
 import React, { PropTypes } from 'react';
-import ItemsList from '../containers/itemContainer';
-import productShape from '../shapes/productShape';
+import ItemsList from '../containers/itemsContainer';
 
-const Body = ({ products }) => (
+const Body = () => (
   <div className="body">
-    <ItemsList products={products} />
+    <ItemsList />
   </div>
 );
-
-const { arrayOf, shape } = PropTypes;
-
-Body.propTypes = {
-  products: arrayOf(
-    shape(
-      productShape,
-    ),
-  ).isRequired,
-};
 
 export default Body;

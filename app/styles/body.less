@@ -1,5 +1,11 @@
-@add-button-width: 36px;
+@action-button-width: 36px;
 @info-block-height: 40px;
+
+.item-image-mixin() {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
 
 .body {
   .text-center;
@@ -45,11 +51,9 @@
         color: @white;
       }
 
-      .background-image {
+      .item-image {
         height: ~"calc(100% - @{info-block-height})";
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
+        .item-image-mixin;
       }
 
       .info {
@@ -63,11 +67,11 @@
 
         h3 {
           .text-overflow;
-          width: ~"calc(100% - @{add-button-width})";
+          width: ~"calc(100% - @{action-button-width})";
         }
 
         a {
-          max-width: @add-button-width;
+          max-width: @action-button-width;
           text-decoration: none;
           border-left: 1px solid @darker-bone-white;
         }

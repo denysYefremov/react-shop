@@ -4,22 +4,12 @@ import Body from '../organisms/body';
 import Footer from '../organisms/footer';
 import productShape from '../shapes/productShape';
 
-const Shop = ({ products }) => (
+const Shop = () => (
   <div className="main">
     <Header />
-    <Body products={products} />
+    <Body />
     <Footer />
   </div>
 );
-
-const { arrayOf, shape } = PropTypes;
-
-Shop.propTypes = {
-  products: arrayOf(
-    shape(
-      productShape,
-    ),
-  ).isRequired,
-};
 
 export default Shop;

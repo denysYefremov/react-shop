@@ -4,6 +4,7 @@ import { addProduct } from '../actions/productActions';
 
 const mapStateToProps = state => ({
   products: state.items,
+  canAddItems: true,
 });
 
 const mapDispatchToProps = dispatch => ({

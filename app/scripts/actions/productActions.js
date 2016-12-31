@@ -3,4 +3,9 @@ export const addProduct = product => ({
   product,
 });
 
+export const removeProduct = product => ({
+  type: 'REMOVE_PRODUCT',
+  product,
+});
+
 export default {};
