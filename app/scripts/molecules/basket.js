@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Counter from '../containers/counterContainer';
 import ItemsList from '../containers/basketItemsContainer';
 import Popover from './popover';
@@ -19,18 +19,24 @@ class Basket extends Component {
           href="basket"
           onClick={(e) => {
             e.preventDefault();
-            this.setState({ isOpened: !this.state.isOpened });
+            this.props.number && this.setState({ isOpened: !this.state.isOpened });
           }}
         >
           <i className="icon icon-cart" />
           <Counter />
         </a>
-        <Popover isOpened={this.state.isOpened}>
+        <Popover isOpened={this.props.number ? this.state.isOpened : false}>
           <ItemsList />
         </Popover>
       </div>
     );
   }
 }
+
+const { number } = PropTypes;
+
+Basket.propTypes = {
+  number,
+};
 
 export default Basket;

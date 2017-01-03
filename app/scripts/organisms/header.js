@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Logo from '../atoms/logo';
-import Basket from '../molecules/basket';
+import Basket from '../containers/basketContainer';
 
 const Header = () => (
   <div className="header">
