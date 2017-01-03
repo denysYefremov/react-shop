@@ -19,7 +19,7 @@ class Basket extends Component {
           href="basket"
           onClick={(e) => {
             e.preventDefault();
-            this.props.number && this.setState({ isOpened: !this.state.isOpened });
+            this.setState({ isOpened: !this.state.isOpened });
           }}
         >
           <i className="icon icon-cart" />
