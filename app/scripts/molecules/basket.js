@@ -12,8 +12,8 @@ class Basket extends Component {
     };
   }
 
-  componentWillUpdate({ number }, { isOpened }) {
-    if (!number && isOpened) {
+  componentWillUpdate({ isEmpty }, { isOpened }) {
+    if (!isEmpty && isOpened) {
       this.setState({ isOpened: false });
     }
   }
@@ -39,10 +39,10 @@ class Basket extends Component {
   }
 }
 
-const { number } = PropTypes;
+const { bool } = PropTypes;
 
 Basket.propTypes = {
-  number,
+  isEmpty: bool,
 };
 
 export default Basket;

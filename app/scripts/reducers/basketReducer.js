@@ -1,4 +1,5 @@
 import Immutable from 'immutable';
+import Constants from '../constants/constants';
 
 const addProduct = (state, obj) => {
   const index = state.findIndex(item => item.get('id') === obj.get('id'));
@@ -23,9 +24,9 @@ const removeProduct = (state, obj) => {
 
 const basketReducer = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_PRODUCT':
+    case Constants.ADD_PRODUCT:
       return addProduct(Immutable.fromJS(state), Immutable.fromJS(action.product)).toJS();
-    case 'REMOVE_PRODUCT':
+    case Constants.REMOVE_PRODUCT:
       return removeProduct(Immutable.fromJS(state), Immutable.fromJS(action.product)).toJS();
     default:
       return state;

@@ -1,10 +1,12 @@
+import Constants from '../constants/constants';
+
 export const addProduct = product => ({
-  type: 'ADD_PRODUCT',
+  type: Constants.ADD_PRODUCT,
   product,
 });
 
 export const removeProduct = product => ({
-  type: 'REMOVE_PRODUCT',
+  type: Constants.REMOVE_PRODUCT,
   product,
 });
 
