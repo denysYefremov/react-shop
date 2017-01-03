@@ -12,6 +12,12 @@ class Basket extends Component {
     };
   }
 
+  componentWillUpdate({ number }, { isOpened }) {
+    if (!number && isOpened) {
+      this.setState({ isOpened: false });
+    }
+  }
+
   render() {
     return (
       <div className="basket">
@@ -25,7 +31,7 @@ class Basket extends Component {
           <i className="icon icon-cart" />
           <Counter />
         </a>
-        <Popover isOpened={this.props.number ? this.state.isOpened : false}>
+        <Popover isOpened={this.state.isOpened}>
           <ItemsList />
         </Popover>
       </div>
