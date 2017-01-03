@@ -10,4 +10,9 @@ export const removeProduct = product => ({
   product,
 });
 
+export const removeItems = products => ({
+  type: Constants.EMPTY_BASKET,
+  products,
+});
+
 export default {};

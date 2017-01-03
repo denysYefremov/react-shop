@@ -28,6 +28,8 @@ const basketReducer = (state = [], action) => {
       return addProduct(Immutable.fromJS(state), Immutable.fromJS(action.product)).toJS();
     case Constants.REMOVE_PRODUCT:
       return removeProduct(Immutable.fromJS(state), Immutable.fromJS(action.product)).toJS();
+    case Constants.EMPTY_BASKET:
+      return [];
     default:
       return state;
   }
