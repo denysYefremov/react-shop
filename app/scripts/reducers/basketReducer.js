@@ -1,46 +1,32 @@
 import Immutable from 'immutable';
 
 const addProduct = (state, obj) => {
-  let immutState = Immutable.List.of(...state);
-  let index = 0;
-  const product = immutState.find((p, i) => {
-    if (p.id === obj.id) {
-      index = i;
-      return true;
-    }
-    return false;
-  });
+  const index = state.findIndex(item => item.get('id') === obj.get('id'));
 
-  if (product) {
-    immutState.get(index).count += 1;
-  } else {
-    immutState = immutState.push({ ...obj, count: 1 });
+  if (index >= 0) {
+    return state.update(index, item => item.set('count', item.get('count') + 1));
   }
 
-  return immutState.toArray();
+  return state.push(obj.set('count', 1));
 };
 
 const removeProduct = (state, obj) => {
-  let immutState = Immutable.List.of(...state);
-  immutState = immutState.map((p) => {
-    if (p.id === obj.id) {
-      return {
-        ...p,
-        count: p.count - 1,
-      };
-    }
-    return p;
-  });
+  const index = state.findIndex(item => item.get('id') === obj.get('id'));
 
-  return immutState.filter(iState => iState.count !== 0).toArray();
+  if (index >= 0) {
+    return state.update(index, item => item.set('count', item.get('count') - 1))
+      .filter(product => product.get('count') !== 0);
+  }
+
+  return state;
 };
 
 const basketReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_PRODUCT':
-      return addProduct(state, action.product);
+      return addProduct(Immutable.fromJS(state), Immutable.fromJS(action.product)).toJS();
     case 'REMOVE_PRODUCT':
-      return removeProduct(state, action.product);
+      return removeProduct(Immutable.fromJS(state), Immutable.fromJS(action.product)).toJS();
     default:
       return state;
   }
