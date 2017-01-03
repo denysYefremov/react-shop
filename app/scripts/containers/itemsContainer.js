@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import itemsList from '../items/itemsList';
 import { addProduct } from '../actions/productActions';
+import { getItems } from '../selectors/selectors';
 
 const mapStateToProps = state => ({
-  products: state.items,
+  products: getItems(state),
   canAddItems: true,
 });
 

@@ -1,17 +1,16 @@
 import { connect } from 'react-redux';
 import Counter from '../atoms/counter';
+import { getItemsCountInBasket } from '../selectors/selectors';
 
-const foundCount = (state) => {
-  let sumCount = 0;
-  state.basket.forEach((p) => {
-    if (p.count) { sumCount += p.count; }
-  });
-
-  return sumCount;
-};
 
 const mapStateToProps = state => ({
-  number: foundCount(state),
+  ...state,
 });
 
-export default connect(mapStateToProps)(Counter);
+const mapDispatchToProps = dispatch => ({});
+
+const margeProps = state => ({
+  number: getItemsCountInBasket(state),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps, margeProps)(Counter);
