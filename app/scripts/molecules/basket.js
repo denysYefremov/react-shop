@@ -14,7 +14,7 @@ class Basket extends Component {
   }
 
   componentWillUpdate({ isEmpty }, { isOpened }) {
-    if (!isEmpty && isOpened) {
+    if (isEmpty && isOpened) {
       this.setState({ isOpened: false });
     }
   }
