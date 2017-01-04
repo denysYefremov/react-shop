@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 import products from '../../initData';
-import Constants from '../constants/constants';
+import { ADD_PRODUCT, REMOVE_PRODUCT, EMPTY_BASKET } from '../constants/constants';
 
 const addProduct = (state, obj) => {
   const index = state.findIndex(item => item.get('id') === obj.get('id'));
@@ -39,11 +39,11 @@ const addProductsFromBasket = (state, productsList) => {
 
 const itemsReducer = (state = products.payload, action) => {
   switch (action.type) {
-    case Constants.ADD_PRODUCT:
+    case ADD_PRODUCT:
       return addProduct(Immutable.fromJS(state), Immutable.fromJS(action.product)).toJS();
-    case Constants.REMOVE_PRODUCT:
+    case REMOVE_PRODUCT:
       return removeProduct(Immutable.fromJS(state), Immutable.fromJS(action.product)).toJS();
-    case Constants.EMPTY_BASKET:
+    case EMPTY_BASKET:
       return addProductsFromBasket(Immutable.fromJS(state), Immutable.fromJS(action.products)).toJS();
     default:
       return state;

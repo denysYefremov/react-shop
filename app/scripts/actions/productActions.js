@@ -1,17 +1,17 @@
-import Constants from '../constants/constants';
+import { ADD_PRODUCT, REMOVE_PRODUCT, EMPTY_BASKET } from '../constants/constants';
 
 export const addProduct = product => ({
-  type: Constants.ADD_PRODUCT,
+  type: ADD_PRODUCT,
   product,
 });
 
 export const removeProduct = product => ({
-  type: Constants.REMOVE_PRODUCT,
+  type: REMOVE_PRODUCT,
   product,
 });
 
 export const removeItems = products => ({
-  type: Constants.EMPTY_BASKET,
+  type: EMPTY_BASKET,
   products,
 });
 

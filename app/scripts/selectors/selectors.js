@@ -2,9 +2,9 @@ export const getItems = state => state.items;
 
 export const getBasketItems = state => state.basket;
 
-export const getItemsCountInBasket = (state) => {
+export const getItemsCountInBasket = (products) => {
   let sumCount = 0;
-  state.basket.forEach((p) => {
+  products.forEach((p) => {
     if (p.count) { sumCount += p.count; }
   });
 
