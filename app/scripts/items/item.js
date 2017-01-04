@@ -4,13 +4,14 @@ import productShape from '../shapes/productShape';
 import noImage from '../../images/no-image.png';
 
 const Item = ({ item, canAddItems, onClick }) => {
-  const backgroundImage = { backgroundImage: `url(${item.img || noImage})` };
+  const { name, count, img } = item;
+  const backgroundImage = { backgroundImage: `url(${img || noImage})` };
   return (
     <li className="item">
       <div className="item-image" style={backgroundImage} alt="" />
       <div className="info">
-        <h3>{ item.name }</h3>
-        <Counter number={item.count} />
+        <h3>{name}</h3>
+        <Counter number={count} />
         <a
           href="item-action"
           className="item-action"

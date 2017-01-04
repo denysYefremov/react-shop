@@ -13,35 +13,44 @@ class Basket extends Component {
     };
   }
 
-  componentWillUpdate({ isEmpty }, { isOpened }) {
-    if (isEmpty && isOpened) {
+  componentWillReceiveProps({ isEmpty }) {
+    if (isEmpty) {
       this.setState({ isOpened: false });
     }
   }
 
   render() {
+    const { isOpened } = this.state;
+    const { isEmpty, products, emptyBasket } = this.props;
+
     return (
       <div className="basket">
         <a
           href="basket"
           onClick={(e) => {
             e.preventDefault();
-            this.setState({ isOpened: !this.state.isOpened });
+            this.setState({ isOpened: !isOpened });
           }}
         >
           <i className="icon icon-cart" />
           <Counter />
         </a>
-        <Popover isOpened={this.state.isOpened}>
-          <ItemsList />
-          <button
-            className="empty-basket"
-            onClick={() => {
-              this.props.emptyBasket(this.props.products);
-            }}
-          >
-            Remove all
-          </button>
+        <Popover isOpened={isOpened}>
+          {
+            isEmpty ?
+              <span> There is no products yet </span> :
+              <div>
+                <ItemsList />
+                <button
+                  className="empty-basket"
+                  onClick={() => {
+                    emptyBasket(products);
+                  }}
+                >
+                  Remove all
+                </button>
+              </div>
+          }
         </Popover>
       </div>
     );
