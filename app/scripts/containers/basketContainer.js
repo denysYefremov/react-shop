@@ -4,7 +4,7 @@ import { removeItems } from '../actions/productActions';
 import { getBasketItems } from '../selectors/selectors';
 
 const mapStateToProps = state => ({
-  isEmpty: !!getBasketItems(state).length,
+  isEmpty: !getBasketItems(state).length,
   products: getBasketItems(state),
 });
 
