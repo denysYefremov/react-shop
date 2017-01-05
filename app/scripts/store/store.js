@@ -1,4 +1,5 @@
 import { createStore, combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
 import basketReducer from '../reducers/basketReducer';
 import itemsReducer from '../reducers/itemsReducer';
 
@@ -6,6 +7,7 @@ const reducers = combineReducers(
   {
     basket: basketReducer,
     items: itemsReducer,
+    routing: routerReducer,
   },
 );
 

@@ -14,7 +14,7 @@ class Basket extends Component {
   }
 
   componentWillReceiveProps({ isEmpty }) {
-    (this.props.isEmpty !== isEmpty && isEmpty) {
+    if (this.props.isEmpty !== isEmpty && isEmpty) {
       this.setState({ isOpened: false });
     }
   }

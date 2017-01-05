@@ -11,4 +11,6 @@ export const getItemsCountInBasket = (products) => {
   return sumCount;
 };
 
+export const getItemById = (products, id) => products.filter(p => p.id === id)[0];
+
 export default {};
