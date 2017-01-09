@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 import Counter from '../atoms/counter';
 import { getItemsCountInBasket, getBasketItems } from '../selectors/selectors';
 
-const mapStateToProps = state => ({ items: getBasketItems(state) });
+const mapStateToProps = state => state;
 
-const margeProps = ({ items }) => ({
-  number: getItemsCountInBasket(items),
+const margeProps = state => ({
+  number: getItemsCountInBasket(state),
 });
 
 export default connect(mapStateToProps, null, margeProps)(Counter);
