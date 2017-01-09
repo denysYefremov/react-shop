@@ -2,11 +2,13 @@ import { createStore, combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import basketReducer from '../reducers/basketReducer';
 import itemsReducer from '../reducers/itemsReducer';
+import searchReducer from '../reducers/searchReducer';
 
 const reducers = combineReducers(
   {
     basket: basketReducer,
     items: itemsReducer,
+    search: searchReducer,
     routing: routerReducer,
   },
 );

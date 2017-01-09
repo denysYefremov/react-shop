@@ -13,4 +13,8 @@ export const getItemsCountInBasket = (products) => {
 
 export const getItemById = (products, id) => products.filter(p => p.id === id)[0];
 
+export const getSearchText = state => state.search;
+
+export const searchItems = (products, nameInput) => products.filter(p => p.name.includes(nameInput));
+
 export default {};

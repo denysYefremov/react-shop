@@ -1,4 +1,4 @@
-import { ADD_PRODUCT, REMOVE_PRODUCT, EMPTY_BASKET } from '../constants/constants';
+import { ADD_PRODUCT, REMOVE_PRODUCT, EMPTY_BASKET, SEARCH_PRODUCTS } from '../constants/constants';
 
 export const addProduct = product => ({
   type: ADD_PRODUCT,
@@ -13,6 +13,11 @@ export const removeProduct = product => ({
 export const removeItems = products => ({
   type: EMPTY_BASKET,
   products,
+});
+
+export const filterItems = text => ({
+  type: SEARCH_PRODUCTS,
+  text,
 });
 
 export default {};

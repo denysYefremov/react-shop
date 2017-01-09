@@ -4,8 +4,8 @@ import { getItemsCountInBasket, getBasketItems } from '../selectors/selectors';
 
 const mapStateToProps = state => ({ items: getBasketItems(state) });
 
-const margeProps = basket => ({
-  number: getItemsCountInBasket(basket.items),
+const margeProps = ({ items }) => ({
+  number: getItemsCountInBasket(items),
 });
 
 export default connect(mapStateToProps, null, margeProps)(Counter);
