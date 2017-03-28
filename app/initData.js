@@ -116,7 +116,7 @@ export default {
       id: 16,
       name: 'Opium',
       description: 'Drugs!',
-      count: 100,
+      count: 11,
       img: '',
     },
     {

@@ -4,7 +4,7 @@ var webpack = require('webpack'),
   StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
-  devtool: '#eval',
+  devtool: 'inline-source-map', //#eval
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',

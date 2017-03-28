@@ -25,12 +25,15 @@ const removeProduct = (state, obj) => {
 
 const addProductsFromBasket = (state, productsList) => {
   let immutableState = state;
-  productsList.forEach((p) => {
-    immutableState = immutableState.update(
-      immutableState.findIndex(item => item.get('id') === p.get('id')),
-      item => item.set('count', item.get('count') + p.get('count')),
-    );
-  });
+
+  if (state.size !== 0) {
+    productsList.forEach((p) => {
+      immutableState = immutableState.update(
+        immutableState.findIndex(item => item.get('id') === p.get('id')),
+        item => item.set('count', item.get('count') + p.get('count')),
+      );
+    });
+  }
 
   const newArray = productsList.filter(p => !immutableState.some(prod => prod.get('id') === p.get('id')));
 

@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import logoImage from '../../images/logo.png';
 
 const Logo = ({ children }) => (

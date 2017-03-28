@@ -4,7 +4,7 @@ import { getItems, getItemById } from '../selectors/selectors';
 
 const mapStateToProps = state => ({ products: getItems(state) });
 
-const margeProps = ({ products }, dispatchProps, { params: { itemId } }) => ({
+const margeProps = ({ products }, _, { params: { itemId } }) => ({
   product: getItemById(products, parseInt(itemId, 0)),
 });
 
